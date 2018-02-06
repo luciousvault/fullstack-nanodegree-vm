@@ -1,0 +1,22 @@
+{% extends "catalog_template.html" %}
+{% block head %}
+  {{ super() }}
+  <style>
+    .catalog_content {
+      display: flex;
+      background-color: white;
+      flex-direction: column;
+      padding: 10px;
+    }
+  </style>
+{% endblock %}
+{% block content %}
+<article class="catalog_content">
+  <h3>New Category</h3>
+  <form action="{{url_for('newCatagory')}}" method = 'POST'>
+    <p>Name:</p>
+    <input type='text' size='30' name='name'>
+    <input type='submit' value='Create'>
+  </form>
+</article>
+{% endblock %}

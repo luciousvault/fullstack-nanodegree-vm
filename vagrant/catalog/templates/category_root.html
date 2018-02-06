@@ -1,0 +1,32 @@
+{% extends "catalog_template.html" %}
+{% block head %}
+  {{ super() }}
+  <style>
+    .catalog_content {
+      display: flex;
+      background-color: white;
+      flex-direction: row;
+      align-content: flex-start;
+      padding: 10px;
+    }
+  </style>
+{% endblock %}
+{% block content %}
+<article class="catalog_content">
+    <aside class="category_list">
+    <a href="{{url_for('newCatagory') }}">Add Category</a>
+    <h3>Categories</h3>
+    {% for c in categories %}
+      <a href="{{url_for('catagoryItems', category_id=c.id)}}">{{c.name}}</a>
+    {% endfor %}
+  </aside>
+  <aside class="vertical_line"></aside>
+  <section class="item_list">
+    <a href="#">Add items</a>
+    <h3>Latest Items</h3>
+    {% for i in items %}
+      <a href="#">i.name</a>
+    {% endfor %}
+  </section>
+</article>
+{% endblock %}
