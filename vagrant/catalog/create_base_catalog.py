@@ -2,7 +2,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from catalog_db_setup import Base, Category, Item
+from catalog_db_setup import Base, Category, Item, User
 
 engine = create_engine('sqlite:///catalog.db')
 # Bind the engine to the metadata of the Base class so that the
@@ -20,14 +20,25 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 
+#super user
+sudo = User(id=1,
+            email="luciousvault12@gmail.com",
+            username="luciousvault12")
+session.query(User).filter(User.id==sudo.id).delete()
+session.commit()
+session.add(sudo)
+session.commit()
+
+
+
 # Game Categories pulled from Wikipedia
 # https://en.wikipedia.org/wiki/List_of_video_game_genres
-category1 = Category(name="Platform")
+category1 = Category(title="Platform")
 
 session.add(category1)
 session.commit()
 
-categoryGame1 = Item(name="Donkey Kong",
+categoryGame1 = Item(title="Donkey Kong",
                     description="""Donkey Kong is considered to be the earliest
                     video game with a storyline that visually unfolds on
                     screen. The eponymous Donkey Kong character is the
@@ -38,11 +49,13 @@ categoryGame1 = Item(name="Donkey Kong",
                     renamed Pauline. The player must take the role of Mario
                     and rescue her. This is the first occurrence of the
                     damsel in distress scenario that would provide the
-                    template for countless video games to come.""")
+                    template for countless video games to come.""",
+                    category=category1,
+                    user=sudo)
 session.add(categoryGame1)
 session.commit()
 
-categoryGame2 = Item(name="Super Mario Bros.",
+categoryGame2 = Item(title="Super Mario Bros.",
                     description="""Super Mario Bros. takes place in the fantasy
                     setting of the Mushroom Kingdom. The game begins when a
                     tribe of a turtle-like race known as the Koopa Troopas
@@ -57,16 +70,18 @@ categoryGame2 = Item(name="Super Mario Bros.",
                     Mario finally reaches Bowser's final stronghold, where he
                     is able to defeat him and send him falling into a pool of
                     lava, allowing the princess to be freed and the Mushroom
-                    Kingdom saved.""")
+                    Kingdom saved.""",
+                    category=category1,
+                    user=sudo)
 session.add(categoryGame2)
 session.commit()
 
-category2 = Category(name="Shooter")
+category2 = Category(title="Shooter")
 
 session.add(category2)
 session.commit()
 
-categoryGame1 = Item(name="DOOM",
+categoryGame1 = Item(title="DOOM",
                     description="""The player takes the role of an unnamed
                     space marine ("Doomguy") who has been punitively posted to
                     Mars after assaulting a superior officer, who ordered his
@@ -89,11 +104,13 @@ categoryGame1 = Item(name="DOOM",
                     assorted radio messages, gunfire, and screams, followed
                     by silence: "Seems your buddies are dead." The player
                     cannot navigate the ship off of Phobos alone and sees that
-                    the only way out is to fight through the Phobos complex.""")
+                    the only way out is to fight through the Phobos complex.""",
+                    category=category2,
+                    user=sudo)
 session.add(categoryGame1)
 session.commit()
 
-categoryGame2 = Item(name="Splatoon",
+categoryGame2 = Item(title="Splatoon",
                     description="""Octo Valley is the game's single player
                     campaign in which players are recruited by war veteran
                     Captain Cuttlefish to rescue The Great Zapfish, Inkopolis'
@@ -109,26 +126,30 @@ categoryGame2 = Item(name="Splatoon",
                     clearing each level in an area, players face off against
                     that area's boss in order to proceed to the next. Clearing
                     each boss unlocks blueprints that can be exchanged at the
-                    ink weapons shop for more weapon options.""")
+                    ink weapons shop for more weapon options.""",
+                    category=category2,
+                    user=sudo)
 session.add(categoryGame2)
 session.commit()
 
 
-category3 = Category(name="Fighting")
+category3 = Category(title="Fighting")
 
 session.add(category3)
 session.commit()
 
-categoryGame1 = Item(name="Street Fighter",
+categoryGame1 = Item(title="Street Fighter",
                     description="""In this game, the player takes control of
                     martial artist Ryu, who competes in a worldwide martial
                     arts tournament, spanning five countries and 10 opponents.
                     A second player can join in at any time and take control of
-                    Ryu's American rival, Ken.""")
+                    Ryu's American rival, Ken.""",
+                    category=category3,
+                    user=sudo)
 session.add(categoryGame1)
 session.commit()
 
-categoryGame2 = Item(name="Street Fighter II",
+categoryGame2 = Item(title="Street Fighter II",
                     description="""Street Fighter II is the first one-on-one
                     fighting game to give players a choice from a variety of
                     player characters with different moves. The choice of
@@ -143,18 +164,20 @@ categoryGame2 = Item(name="Street Fighter II",
                     CPU-controlled characters not selectable by the player. As
                     in the original, a second player could join in at any
                     point during single player mode and compete against the
-                    other player in competitive matches.""")
+                    other player in competitive matches.""",
+                    category=category3,
+                    user=sudo)
 session.add(categoryGame2)
 session.commit()
 
 
 
-category4 = Category(name="Stealth")
+category4 = Category(title="Stealth")
 
 session.add(category4)
 session.commit()
 
-categoryGame1 = Item(name="Metal Gear",
+categoryGame1 = Item(title="Metal Gear",
                     description="""The first Metal Gear game for the MSX
                     follows Solid Snake, a rookie of the FOXHOUND special
                     operations unit. He is sent by his superior Big Boss to
@@ -171,11 +194,13 @@ categoryGame1 = Item(name="Metal Gear",
                     Solid Snake the real Big Boss has established a new
                     military nation, Zanzibar Land, and he and Snake face off
                     again, with Snake achieving victory and seemingly killing
-                    Big Boss for good.""")
+                    Big Boss for good.""",
+                    category=category4,
+                    user=sudo)
 session.add(categoryGame1)
 session.commit()
 
-categoryGame2 = Item(name="Sly Cooper",
+categoryGame2 = Item(title="Sly Cooper",
                     description="""Sly Cooper and the Thievius Raccoonus, also
                     known as Sly Raccoon in European countries, was released in
                     2002 for the PlayStation 2 platform. Sly must recover his
@@ -185,17 +210,19 @@ categoryGame2 = Item(name="Sly Cooper",
                     Fiendish Five, led by Clockwerk, a giant mechanical owl.
                     Meanwhile, Sly and his gang must keep ahead of Interpol's
                     Inspector Carmelita Fox, who promises to one day capture
-                    Sly and put him away for his crimes.""")
+                    Sly and put him away for his crimes.""",
+                    category=category4,
+                    user=sudo)
 session.add(categoryGame2)
 session.commit()
 
 
-category5 = Category(name="Rhythm")
+category5 = Category(title="Rhythm")
 
 session.add(category5)
 session.commit()
 
-categoryGame1 = Item(name="Dance Dance Revolution",
+categoryGame1 = Item(title="Dance Dance Revolution",
                     description="""The core gameplay involves the player
                     stepping their feet to correspond with the arrows that
                     appears on screen and the beat. During normal gameplay,
@@ -207,11 +234,13 @@ categoryGame1 = Item(name="Dance Dance Revolution",
                     arrows on the dance platform, and the player is given a
                     judgement for their accuracy of every streaked notes (From
                     highest to lowest: Marvelous, Perfect, Great, Good, Almost,
-                    Miss""")
+                    Miss""",
+                    category=category5,
+                    user=sudo)
 session.add(categoryGame1)
 session.commit()
 
-categoryGame2 = Item(name="Guitar Hero",
+categoryGame2 = Item(title="Guitar Hero",
                     description="""The original Guitar Hero was released on the
                     PlayStation 2 in November 2005. Guitar Hero is notable
                     because it comes packaged with a controller peripheral
@@ -234,6 +263,8 @@ categoryGame2 = Item(name="Guitar Hero",
                     comprised 47 playable rock songs (most of which were cover
                     versions of popular songs from artists and bands from the
                     1960s through modern rock). Guitar Hero has sold nearly
-                    1.5 million copies to date.""")
+                    1.5 million copies to date.""",
+                    category=category5,
+                    user=sudo)
 session.add(categoryGame2)
 session.commit()
