@@ -12,10 +12,18 @@
 {% endblock %}
 {% block content %}
 <article class="catalog_content">
-  <h3>New Category</h3>
-  <form action="{{url_for('newCategory')}}" method = 'POST'>
-    <p>Name:</p>
+  <h3>New Item</h3>
+  <form action="{{url_for('newItem')}}" method = 'POST'>
+    <p>Title:</p>
     <input type='text' size='30' name='name'>
+    <p>Description:</p>
+    <input type='text' size='30' name='description'>
+    <p>Category:</p>
+    <select name="category_id">
+      {% for c in categories %}
+      <option value="{{c.category_id}}">{{c.name}}</option>
+      {% endfor %}
+    </select>
     <input type='submit' value='Create'>
   </form>
 </article>

@@ -9,10 +9,6 @@
       align-content: flex-start;
       padding: 10px;
     }
-    .flex_item_wrapper {
-      display: inline-flex;
-      flex: row
-    }
   </style>
 {% endblock %}
 {% block content %}
@@ -21,7 +17,7 @@
   <a href="{{url_for('newCategory')}}">Add Category</a>
   <h3>Categories</h3>
     {% for c in categories %}
-      <a href="{{url_for('categoryItems', category_title=c.title)}}">{{c.title}}</a>
+      <a href="{{url_for('categoryItems', category_title=c.name)}}">{{c.name}}</a>
     {% endfor %}
   </aside>
   <aside class="vertical_line"></aside>
@@ -29,11 +25,8 @@
     <a href="{{url_for('newItem')}}">Add items</a>
     <h3>Latest Items</h3>
     {% for i in items %}
-    <div class="flex_item_wrapper">
-      <a href="{{url_for('showItem', category_title=i.category.title,
-        item_title=i.title)}}">{{i.title}}</a>
-      <span class="item_span">({{i.category.title}})</span>
-    </div>
+      <a href="{{url_for('showItem', category_title=i.category.name,
+        item_title=i.name)}}">{{i.name}}</a>
     {% endfor %}
   </section>
 </article>
