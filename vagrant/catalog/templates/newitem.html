@@ -21,7 +21,7 @@
     <p>Category:</p>
     <select name="category_id">
       {% for c in categories %}
-      <option value="{{c.category_id}}">{{c.name}}</option>
+      <option value="{{c.category_id}}">{{c.title}}</option>
       {% endfor %}
     </select>
     <input type='submit' value='Create'>

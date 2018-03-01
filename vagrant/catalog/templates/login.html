@@ -1,0 +1,48 @@
+{% extends "catalog_template.html" %}
+{% block head %}
+  {{ super() }}
+  <style>
+    .catalog_content {
+      display: flex;
+      background-color: white;
+      flex-direction: row;
+      align-content: flex-start;
+      padding: 10px;
+    }
+    .flex_item_wrapper {
+      display: inline-flex;
+      flex: row
+    }
+  </style>
+  <meta name="google-signin-scope" content="openid email">
+  <meta name="google-signin-client_id" content="895048119348-668hb6ug28ubbh6j57rg8m2mogj8r51a.apps.googleusercontent.com">
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+{% endblock %}
+{% block content %}
+  <div class="g-signin2"
+    data-scope="https://www.googleapis.com/auth/plus.login"
+    data-clientid="895048119348-668hb6ug28ubbh6j57rg8m2mogj8r51a.apps.googleusercontent.com"
+    data-redirect="postmessage"
+    data-accesstype="offline"
+    data-cookiepolicy="single_host_origin"
+    data-onsuccess="onSignIn"
+    data-onfailure="onSignInFailure"
+    data-approvalprompt="force">
+  </div>
+  <script>
+      function onSignIn(googleUser) {
+        // Useful data for your client-side scripts:
+        var profile = googleUser.getBasicProfile();
+        console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+        console.log('Full Name: ' + profile.getName());
+        console.log('Given Name: ' + profile.getGivenName());
+        console.log('Family Name: ' + profile.getFamilyName());
+        console.log("Image URL: " + profile.getImageUrl());
+        console.log("Email: " + profile.getEmail());
+
+        // The ID token you need to pass to your backend:
+        var id_token = googleUser.getAuthResponse().id_token;
+        console.log("ID Token: " + id_token);
+      };
+    </script>
+{% endblock %}

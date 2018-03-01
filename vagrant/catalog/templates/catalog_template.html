@@ -9,7 +9,9 @@
     <header>
       <div class="header_content">
         <h2>Catalog App</h2>
-        <button class="login_button">Login</button>
+        <form action="{{url_for('showLogin')}}" method="GET">
+          <button class="login_button">Login</button>
+        </form>
       </div>
     </header>
     <main>{% block content %}{% endblock %}</main>
